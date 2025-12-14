@@ -37,7 +37,12 @@ export default function Login() {
       // Based on SweetController:
       // login: res.status(200).json({ token: ..., user: ... })
       login(response.user);
-      navigate('/');
+      login(response.user);
+      if (response.user.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/');
+      }
     } catch (err: any) {
       setError(err.response?.data?.message || 'Login failed');
     } finally {
