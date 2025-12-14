@@ -65,8 +65,13 @@ A full-stack Sweet Shop Management System built with Node.js, Express, TypeScrip
 ### Usage Description
 
 - Used Gemini to generate the initial `package.json` scripts using native Node.js 20.6+ features (`--env-file`, `--watch`).
-- Generated initial Express app structure and Jest configuration.
-- Created initial smoke tests for the API.
+- Implemented secure Authentication with JWT and HTTPOnly cookies (Register/Login/Logout).
+- Implemented `verifyToken` middleware for route protection.
+- Implemented Sweets Management:
+  - `POST /api/sweets` (Protected)
+  - `GET /api/sweets` (Public)
+  - `PUT /api/sweets/:id` (Admin Only)
+  - `DELETE /api/sweets/:id` (Admin Only)
 - Implemented `User` and `Sweet` Mongoose models with validation and password hashing.
 - Assisted in configuring the MongoDB connection logic.
 

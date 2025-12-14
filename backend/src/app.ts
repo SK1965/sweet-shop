@@ -4,6 +4,7 @@ import helmet from 'helmet';
 
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/authRoutes';
+import sweetRoutes from './routes/sweetRoutes';
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
+app.use('/api/sweets', sweetRoutes);
 
 
 
