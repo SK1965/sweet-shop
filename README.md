@@ -70,6 +70,7 @@ A full-stack Sweet Shop Management System built with Node.js, Express, TypeScrip
 - Implemented Sweets Management:
   - `POST /api/sweets` (Protected)
   - `GET /api/sweets` (Public)
+  - `GET /api/sweets/search` (Public, filters: name, category, price)
   - `PUT /api/sweets/:id` (Admin Only)
   - `DELETE /api/sweets/:id` (Admin Only)
 - Implemented `User` and `Sweet` Mongoose models with validation and password hashing.
