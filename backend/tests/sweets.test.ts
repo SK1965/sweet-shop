@@ -195,4 +195,37 @@ describe('Sweets Endpoints', () => {
       expect(res.status).toBe(404);
     });
   });
+  describe('GET /api/sweets/search', () => {
+    beforeEach(async () => {
+      // Seed data for search
+      await Sweet.deleteMany({});
+      await Sweet.insertMany([
+        { name: 'Chocolate Bar', category: 'Chocolate', price: 2, stock: 100 },
+        { name: 'Gummy Bears', category: 'Candy', price: 1, stock: 200 },
+        { name: 'Vanilla Ice Cream', category: 'Frozen', price: 5, stock: 50 },
+        { name: 'Expensive Truffle', category: 'Chocolate', price: 50, stock: 10 }
+      ]);
+    });
+
+    it('should search sweets by name', async () => {
+      const res = await request(app).get('/api/sweets/search?name=Chocolate');
+      expect(res.status).toBe(200);
+      expect(res.body.length).toBeGreaterThanOrEqual(1);
+      expect(res.body[0].name).toContain('Chocolate');
+    });
+
+    it('should search sweets by category', async () => {
+      const res = await request(app).get('/api/sweets/search?category=Candy');
+      expect(res.status).toBe(200);
+      expect(res.body.length).toBe(1);
+      expect(res.body[0].name).toBe('Gummy Bears');
+    });
+
+    it('should filter sweets by price range', async () => {
+      const res = await request(app).get('/api/sweets/search?minPrice=3&maxPrice=10');
+      expect(res.status).toBe(200);
+      expect(res.body.length).toBe(1);
+      expect(res.body[0].name).toBe('Vanilla Ice Cream');
+    });
+  });
 });
