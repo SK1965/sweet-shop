@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import AdminRoute from './components/auth/AdminRoute';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AddSweet from './pages/admin/AddSweet';
+import EditSweet from './pages/admin/EditSweet';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
@@ -33,6 +34,7 @@ function App() {
           <Route element={<AdminRoute />}>
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/sweets/new" element={<AddSweet />} />
+            <Route path="/admin/sweets/:id/edit" element={<EditSweet />} />
           </Route>
 
           <Route
