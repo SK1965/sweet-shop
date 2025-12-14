@@ -97,4 +97,102 @@ describe('Sweets Endpoints', () => {
       expect(res.body[0]).toHaveProperty('name');
     });
   });
+  describe('PUT /api/sweets/:id', () => {
+    let customerToken: string;
+    let sweetId: string;
+
+    beforeAll(async () => {
+        // Create normal user
+        const customer = new User({ email: 'simple_customer@example.com', password: 'password123', role: 'customer' });
+        await customer.save();
+        const res = await request(app).post('/api/auth/login').send({ email: 'simple_customer@example.com', password: 'password123' });
+        customerToken = res.body.token;
+    });
+
+    beforeEach(async () => {
+        const sweet = new Sweet({ name: 'Update Me', category: 'Test', price: 10, stock: 10 });
+        await sweet.save();
+        sweetId = sweet._id.toString();
+    });
+
+    it('should update sweet details if admin', async () => {
+      const res = await request(app)
+        .put(`/api/sweets/${sweetId}`)
+        .set('Cookie', [`token=${token}`])
+        .send({ price: 15, stock: 5 });
+
+      expect(res.status).toBe(200);
+      expect(res.body.price).toBe(15);
+      expect(res.body.stock).toBe(5);
+    });
+
+    it('should return 403 if user is not admin', async () => {
+      const res = await request(app)
+        .put(`/api/sweets/${sweetId}`)
+        .set('Cookie', [`token=${customerToken}`])
+        .send({ price: 15 });
+
+        // Depending on middleware implementation, might be 403 Forbidden.
+        expect(res.status).toBe(403);
+    });
+
+    it('should return 404 if sweet not found', async () => {
+      const res = await request(app)
+        .put(`/api/sweets/${new mongoose.Types.ObjectId()}`)
+        .set('Cookie', [`token=${token}`])
+        .send({ price: 20 });
+
+      expect(res.status).toBe(404);
+    });
+  });
+
+  describe('DELETE /api/sweets/:id', () => {
+    let customerToken: string;
+    let sweetId: string;
+
+    beforeAll(async () => {
+         // Re-login as customer if previous block didn't run (though it did, redundancy for safety or we can scope customerToken higher)
+        // For simplicity, reusing customerToken if set, or getting new one.
+        if (!customerToken) {
+            const res = await request(app).post('/api/auth/login').send({ email: 'simple_customer@example.com', password: 'password123' });
+            customerToken = res.body.token;
+        }
+    });
+
+    beforeEach(async () => {
+        const sweet = new Sweet({ name: 'Delete Me', category: 'Test', price: 10, stock: 10 });
+        await sweet.save();
+        sweetId = sweet._id.toString();
+    });
+
+    it('should delete sweet if admin', async () => {
+      const res = await request(app)
+        .delete(`/api/sweets/${sweetId}`)
+        .set('Cookie', [`token=${token}`]);
+
+      expect(res.status).toBe(200);
+      
+      const check = await Sweet.findById(sweetId);
+      expect(check).toBeNull();
+    });
+
+    it('should return 403 if user is not admin', async () => {
+      const res = await request(app)
+        .delete(`/api/sweets/${sweetId}`)
+        .set('Cookie', [`token=${customerToken}`]);
+
+      expect(res.status).toBe(403);
+      
+      const check = await Sweet.findById(sweetId);
+      expect(check).not.toBeNull();
+    });
+
+    it('should return 404 if sweet not found', async () => {
+      const res = await request(app)
+        .delete(`/api/sweets/${new mongoose.Types.ObjectId()}`)
+        .set('Cookie', [`token=${token}`]);
+
+      expect(res.status).toBe(404);
+    });
+  });
 });
