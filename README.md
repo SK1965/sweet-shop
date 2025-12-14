@@ -73,6 +73,9 @@ A full-stack Sweet Shop Management System built with Node.js, Express, TypeScrip
   - `GET /api/sweets/search` (Public, filters: name, category, price)
   - `PUT /api/sweets/:id` (Admin Only)
   - `DELETE /api/sweets/:id` (Admin Only)
+- Implemented Inventory Management:
+  - `POST /api/sweets/:id/purchase` (Protected, Stock check)
+  - `POST /api/sweets/:id/restock` (Admin Only)
 - Implemented `User` and `Sweet` Mongoose models with validation and password hashing.
 - Assisted in configuring the MongoDB connection logic.
 

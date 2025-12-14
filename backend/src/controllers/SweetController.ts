@@ -73,3 +73,53 @@ export const searchSweets = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
+export const purchaseSweet = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const { quantity } = req.body;
+
+        if (!quantity || quantity <= 0) {
+            return res.status(400).json({ message: 'Invalid quantity' });
+        }
+
+        const sweet = await Sweet.findById(id);
+        if (!sweet) {
+            return res.status(404).json({ message: 'Sweet not found' });
+        }
+
+        if (sweet.stock < quantity) {
+            return res.status(400).json({ message: 'Insufficient stock' });
+        }
+
+        sweet.stock -= quantity;
+        await sweet.save();
+
+        res.status(200).json(sweet);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+export const restockSweet = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const { quantity } = req.body;
+
+        if (!quantity || quantity <= 0) {
+            return res.status(400).json({ message: 'Invalid quantity' });
+        }
+
+        const sweet = await Sweet.findById(id);
+        if (!sweet) {
+            return res.status(404).json({ message: 'Sweet not found' });
+        }
+
+        sweet.stock += quantity;
+        await sweet.save();
+
+        res.status(200).json(sweet);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+};
