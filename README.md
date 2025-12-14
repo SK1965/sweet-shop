@@ -13,7 +13,6 @@ A full-stack Sweet Shop Management System built with Node.js, Express, TypeScrip
 
 - **Framework**: Node.js with Express
 - **Language**: TypeScript
-- **Security**: `helmet` for headers, `cors`, `bcryptjs` for hashing, `jsonwebtoken` & `cookie-parser` for auth
 - **Database Logic**: Mongoose (MongoDB) - `User` and `Sweet` models implemented
 - **Testing**: Jest with `supertest` and `ts-jest`
 - **Configuration**:
@@ -70,9 +69,6 @@ A full-stack Sweet Shop Management System built with Node.js, Express, TypeScrip
 - Created initial smoke tests for the API.
 - Implemented `User` and `Sweet` Mongoose models with validation and password hashing.
 - Assisted in configuring the MongoDB connection logic.
-- Implemented secure Authentication with JWT and HTTPOnly cookies (Register/Login/Logout).
-- Implemented `verifyToken` middleware for route protection.
-- Implemented Sweets Management (Create Sweet [Protected], List Sweets [Public]).
 
 ### Reflection
 
