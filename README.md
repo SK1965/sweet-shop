@@ -13,7 +13,7 @@ A full-stack Sweet Shop Management System built with Node.js, Express, TypeScrip
 
 - **Framework**: Node.js with Express
 - **Language**: TypeScript
-- **Database Logic**: Mongoose (MongoDB)
+- **Database Logic**: Mongoose (MongoDB) - `User` and `Sweet` models implemented
 - **Testing**: Jest with `supertest` and `ts-jest`
 - **Configuration**:
   - Native Node.js `.env` support
@@ -40,7 +40,7 @@ A full-stack Sweet Shop Management System built with Node.js, Express, TypeScrip
 
    ```env
    PORT=3000
-   MONGODB_URI=mongodb://localhost:27017/sweetshop
+   MONGODB_URI=mongodb://localhost:27017/sweets_shop
    JWT_SECRET=supersecretkey
    NODE_ENV=development
    ```
@@ -67,6 +67,8 @@ A full-stack Sweet Shop Management System built with Node.js, Express, TypeScrip
 - Used Gemini to generate the initial `package.json` scripts using native Node.js 20.6+ features (`--env-file`, `--watch`).
 - Generated initial Express app structure and Jest configuration.
 - Created initial smoke tests for the API.
+- Implemented `User` and `Sweet` Mongoose models with validation and password hashing.
+- Assisted in configuring the MongoDB connection logic.
 
 ### Reflection
 

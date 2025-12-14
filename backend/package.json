@@ -13,10 +13,11 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
-    "@types/mongoose": "^5.11.96",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.0.2",
     "@types/supertest": "^6.0.3",
     "eslint": "^9.39.2",
@@ -25,5 +26,13 @@
     "ts-jest": "^29.4.6",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "express": "^5.2.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.0.1"
   }
 }
