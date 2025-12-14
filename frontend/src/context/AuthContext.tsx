@@ -21,13 +21,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // For now, we will rely on localStorage to keep UI in sync, 
     // but the real source of truth is the backend cookie.
     const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+    if (storedUser && storedUser !== 'undefined') {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (error) {
+        console.error('Failed to parse user from localStorage', error);
+        localStorage.removeItem('user');
+      }
+    } else if (storedUser === 'undefined') {
+      localStorage.removeItem('user');
     }
     setLoading(false);
   }, []);
 
   const handleLogin = (newUser: User) => {
+    if (!newUser) return;
     setUser(newUser);
     localStorage.setItem('user', JSON.stringify(newUser));
   };
