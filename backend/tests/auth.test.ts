@@ -2,7 +2,7 @@ import request from 'supertest';
 import mongoose from 'mongoose';
 import app from '../src/app';
 import User from '../src/models/User';
-
+import { describe, it, beforeAll, beforeEach, afterEach, afterAll, expect } from '@jest/globals';
 describe('Authentication Endpoints', () => {
   beforeAll(async () => {
     // Connect to a test database
